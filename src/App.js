@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { useState, useEffect } from "react";
+
+// internal import
+import Main from "./Main";
 
 function App() {
+  const [roomId, setRoomId] = useState();
+
+  useEffect(() => {
+    setRoomId(uuidv4());
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Redirect path="*" to={`${roomId}`} />
+        {/* <Route component={<Main roomId={roomId} />}></Route> */}
+      </Router>
+      <Main roomId={roomId} />
+    </>
   );
 }
 
